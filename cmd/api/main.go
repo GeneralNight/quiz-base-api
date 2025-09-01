@@ -5,10 +5,10 @@ import (
 
 	"github.com/joho/godotenv"
 
-	"github.com/you/quizapi/internal/config"
-	"github.com/you/quizapi/internal/db"
-	"github.com/you/quizapi/internal/quiz"
-	"github.com/you/quizapi/internal/router"
+	"github.com/GeneralNight/quiz-base-api/internal/config"
+	"github.com/GeneralNight/quiz-base-api/internal/db"
+	"github.com/GeneralNight/quiz-base-api/internal/quiz"
+	"github.com/GeneralNight/quiz-base-api/internal/router"
 )
 
 func main() {

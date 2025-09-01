@@ -1,4 +1,4 @@
-module quiz-api
+module quiz-base-api
 
 go 1.22
 

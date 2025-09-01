@@ -1,8 +1,8 @@
 package router
 
 import (
+	"github.com/GeneralNight/quiz-base-api/internal/quiz"
 	"github.com/gin-gonic/gin"
-	"github.com/you/quizapi/internal/quiz"
 )
 
 func New() *gin.Engine {
