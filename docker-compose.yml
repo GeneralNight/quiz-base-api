@@ -1,0 +1,47 @@
+services:
+  db:
+    image: mariadb:11.4.4
+    ports:
+      - "3306:3306"
+    volumes:
+      - database:/var/lib/mysql
+      - ./migrations:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_USER: quiz
+      MYSQL_DATABASE: quiz
+      MYSQL_PASSWORD: quiz
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_period: 0s
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.1-apache
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+      PMA_PMADB: phpmyadmin
+    depends_on:
+      db:
+        condition: service_healthy
+  api:
+    build:
+      context: .        
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=db      
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  database:
+  cache:
