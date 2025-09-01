@@ -1,4 +1,4 @@
-module quiz-base-api
+module github.com/GeneralNight/quiz-base-api
 
 go 1.22
 
