@@ -1,33 +1,37 @@
 package router
 
 import (
-	"github.com/GeneralNight/quiz-base-api/internal/quiz"
+	"quiz-base-api/internal/handlers"
+
 	"github.com/gin-gonic/gin"
 )
 
-func New() *gin.Engine {
+type Router struct {
+	*gin.Engine
+}
+
+func SetupRoutes() *gin.Engine {
 	r := gin.Default()
 	// healthcheck
 	r.GET("/healthz", func(c *gin.Context) { c.JSON(200, gin.H{"ok": true}) })
-
 	quizGroup := r.Group("/quiz")
 	{
-		quizGroup.GET("", quiz.GetQuiz)
-		quizGroup.GET("/:id", quiz.GetQuizById)
-		quizGroup.POST("", quiz.CreateQuiz)
-		quizGroup.PUT("/:id", quiz.UpdateQuiz)
-		quizGroup.DELETE("/:id", quiz.DeleteQuiz)
-		quizGroup.PUT("/:id/status", quiz.UpdateQuizStatus)
+		quizGroup.GET("", handlers.GetQuiz)
+		quizGroup.GET("/:id", handlers.GetQuizById)
+		quizGroup.POST("", handlers.CreateQuiz)
+		quizGroup.PUT("/:id", handlers.UpdateQuiz)
+		quizGroup.DELETE("/:id", handlers.DeleteQuiz)
+		quizGroup.PUT("/:id/status", handlers.UpdateQuizStatus)
 
-		quizGroup.GET("/:id/questions", quiz.GetQuizQuestions)
-		quizGroup.POST("/:id/questions", quiz.CreateQuizQuestion)
-		quizGroup.PUT("/questions/:questionId", quiz.UpdateQuizQuestion)
-		quizGroup.DELETE("/questions/:questionId", quiz.DeleteQuizQuestion)
+		quizGroup.GET("/:id/questions", handlers.GetQuizQuestions)
+		quizGroup.POST("/:id/questions", handlers.CreateQuizQuestion)
+		quizGroup.PUT("/questions/:questionId", handlers.UpdateQuizQuestion)
+		quizGroup.DELETE("/questions/:questionId", handlers.DeleteQuizQuestion)
 
-		quizGroup.GET("/questions/:questionId/options", quiz.GetQuestionOptions)
-		quizGroup.POST("/questions/:questionId/options", quiz.CreateQuestionOption)
-		quizGroup.PUT("/options/:optionId", quiz.UpdateQuestionOption)
-		quizGroup.DELETE("/options/:optionId", quiz.DeleteQuestionOption)
+		quizGroup.GET("/questions/:questionId/options", handlers.GetQuestionOptions)
+		quizGroup.POST("/questions/:questionId/options", handlers.CreateQuestionOption)
+		quizGroup.PUT("/options/:optionId", handlers.UpdateQuestionOption)
+		quizGroup.DELETE("/options/:optionId", handlers.DeleteQuestionOption)
 	}
 	return r
 }

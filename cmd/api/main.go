@@ -5,10 +5,9 @@ import (
 
 	"github.com/joho/godotenv"
 
-	"github.com/GeneralNight/quiz-base-api/internal/config"
-	"github.com/GeneralNight/quiz-base-api/internal/db"
-	"github.com/GeneralNight/quiz-base-api/internal/quiz"
-	"github.com/GeneralNight/quiz-base-api/internal/router"
+	"quiz-base-api/internal/config"
+	"quiz-base-api/internal/db"
+	"quiz-base-api/internal/router"
 )
 
 func main() {
@@ -22,12 +21,7 @@ func main() {
 	}
 	defer conn.Close()
 
-	quizRepo := quiz.NewRepository(conn)
-	quizSvc := quiz.NewService(quizRepo)
-	quizHandler := quiz.NewHandler(quizSvc)
-
-	r := router.New()
-	quiz.RegisterRoutes(r, quizHandler)
+	r := router.SetupRoutes()
 
 	addr := ":" + cfg.AppPort
 	log.Println("listening on", addr)
